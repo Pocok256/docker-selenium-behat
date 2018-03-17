@@ -1,0 +1,39 @@
+version: '2'
+services:
+  firefox:
+    image: selenium/node-firefox:3.11.0-antimony
+    volumes:
+      - /dev/shm:/dev/shm
+    depends_on:
+      - hub
+    environment:
+      HUB_HOST: hub
+
+  chrome:
+    image: selenium/node-chrome:3.11.0-antimony
+    volumes:
+      - /dev/shm:/dev/shm
+    depends_on:
+      - hub
+    environment:
+      HUB_HOST: hub
+
+  hub:
+    image: selenium/hub:3.11.0-antimony
+    ports:
+      - "4444:4444"
+  php:
+    build: .
+    volumes:
+      - ".:/projekt"
+    command: vendor/bin/behat features/teszt.feature
+    working_dir: /projekt
+    depends_on:
+      - composer
+  composer:
+    restart: 'no'
+    image: composer/composer:php7
+    command: install
+    volumes:
+      - ".:/projekt"
+    working_dir: /projekt
