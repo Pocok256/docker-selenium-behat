@@ -30,6 +30,8 @@ services:
     working_dir: /projekt
     depends_on:
       - composer
+    links:
+      - "hub:teszt"
   composer:
     restart: 'no'
     image: composer/composer:php7
