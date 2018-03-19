@@ -11,4 +11,4 @@ default:
        default:
          goutte: ~
      selenium2:
-           wd_host: "teszt:4444/wd/hub"
+           wd_host: "hub:4444/wd/hub"
